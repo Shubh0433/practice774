@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Randoom Dog Image</title>
+    <style>
+      .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .contain{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 50%;
+        width: 40%;
+        background-color: salmon;
+        border: 10px solid rgb(100, 52, 47);
+      }
+      img {
+        height: 300px;
+        width: 300px;
+        margin: 10px;
+        border: 5px solid rgb(100, 52, 47);
+        border-radius: 10%;
+      }
+      #getDog {
+        color: rgb(47, 10, 81);
+        margin: 10px;
+        border: 5px solid rgba(38, 9, 40, 0.141);
+        border-radius: 5%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="contain">
+        <h3>Random Dog Image</h3>
+        <button id="getDog">Get New Dog</button>
+      <div>
+        <img id="dogImage" alt="dog randomly" />
+      </div>
+      </div>
+      
+    </div>
+
+    <script>
+      function fetchDogImage() {
+        return new Promise((resolve, reject) => {
+          fetch("https://dog.ceo/api/breeds/image/random")
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                reject("api shi se nhi fetch hui h");
+              }
+            })
+            .then((data) => resolve(data.message))
+
+            .catch((error) => reject("gdbd h " + error));
+        });
+      }
+
+      document.getElementById("getDog").addEventListener("click", () => {
+        fetchDogImage()
+          .then((dog) => {
+                document.getElementById("dogImage").src = dog;
+          })
+
+          .catch((error) => {
+              console.error(error);
+          });
+      });
+    </script>
+  </body>
+</html>
